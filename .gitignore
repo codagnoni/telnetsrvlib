@@ -33,3 +33,5 @@ MANIFEST
 telnetsrv/server_rsa.key
 
 server_rsa.key
+
+*.swp

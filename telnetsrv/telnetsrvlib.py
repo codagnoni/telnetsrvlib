@@ -475,7 +475,10 @@ class TelnetHandlerBase(SocketServer.BaseRequestHandler):
                 self.COMMANDS[alias.upper()] = self.COMMANDS[name]
                     
         SocketServer.BaseRequestHandler.__init__(self, request, client_address, server)
-    
+   
+    def setprompt(self, prompt):
+        self.PROMPT = prompt
+
     class false_request(object):
         def __init__(self):
             self.sock = None

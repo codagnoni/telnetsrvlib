@@ -79,10 +79,25 @@ class TestTelnetHandler(TelnetHandler):
     # -- Override items to customize the server --
 
     WELCOME = 'You have connected to the test server.'
-    PROMPT = "TestServer> "
+    PROMPT = "# "
     authNeedUser = True
     authNeedPass = False
-    
+ 
+    def handle(self):
+        "The actual service to which the user has connected."
+        if self.DOECHO:
+            self.writeline(self.WELCOME)
+        while self.RUNSHELL:
+            raw_input = self.readline(prompt=self.PROMPT).strip()
+            self.input = self.input_reader(self, raw_input)
+            self.raw_input = self.input.raw
+            if self.input.cmd:
+                cmd = self.input.cmd.upper()
+                params = self.input.params
+		self.writeresponse("cmd is: %s %s" % (cmd, params))
+
+
+   
     def authCallback(self, username, password):
         '''Called to validate the username/password.'''
         # Note that this method will be ignored if the SSH server is invoked.
